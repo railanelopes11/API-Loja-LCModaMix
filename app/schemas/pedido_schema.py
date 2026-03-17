@@ -7,12 +7,18 @@ class PedidoBase(BaseModel):
     cliente_id: int
     status: str
     
-
-class PedidoCreate(PedidoBase):
+class PedidoCreate(BaseModel):
+    cliente_id: int
     itens : List[ItemPedidoCreate]
+    status: str = "Pendente"
 
-class PedidoResponse(PedidoBase):
+class PedidoUpdateStatus(BaseModel):
+    status : str
+   
+class PedidoResponse(BaseModel):
     id: int
+    cliente_id: int
+    status: str
     data_pedido: datetime
     itens : List[ItemPedidoResponse]
 

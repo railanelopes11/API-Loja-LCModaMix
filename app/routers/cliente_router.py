@@ -16,10 +16,25 @@ def get_db():
 
 @router.post("/", response_model=ClienteResponse)
 def criar_cliente(cliente: ClienteCreate, db: Session = Depends(get_db)):
-    novo_cliente = Cliente(**cliente.model_dump())
+    cliente_existente = db.query(Cliente).filter(Cliente.email == cliente.email).first()
+    novo_cliente = db.query(Cliente).filter(Cliente.email == cliente.email).first()
+
+    if cliente_existente:
+        raise HTTPException(
+            status_code=400,
+            detail="Email já cadastrado"
+        )
+
+    novo_cliente = Cliente(
+        nome=cliente.nome,
+        email=cliente.email,
+        telefone=cliente.telefone
+    )
+
     db.add(novo_cliente)
     db.commit()
     db.refresh(novo_cliente)
+
     return novo_cliente
 
 @router.get("/", response_model=List[ClienteResponse])

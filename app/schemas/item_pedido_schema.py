@@ -7,7 +7,7 @@ class ItemPedidoBase(BaseModel):
     
 
 class ItemPedidoCreate(ItemPedidoBase):
-    pedido_id: int
+   pass
 
 class ItemPedidoResponse(ItemPedidoBase):
     id: int

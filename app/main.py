@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import cliente_router, produto_router, pedidos_router, item_pedido_router
+from app.routers import cliente_router, produto_router, pedidos_router
 from app.database import Base, engine
 import app.models
 
@@ -12,7 +12,6 @@ Base.metadata.create_all(bind=engine)
 app.include_router(cliente_router.router)
 app.include_router(produto_router.router) 
 app.include_router(pedidos_router.router)
-app.include_router(item_pedido_router.router)
 
 @app.get("/")
 def root():
